@@ -20,7 +20,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.contrib.auth import views as auth_views
 from core.views import (
-    SignupView, LoginView, EmailVerification, activate, test_email_view,
+    SignupView, LoginView, EmailVerification, activate,
     update_session_language, IndexView, CustomPasswordResetView
 )
 
@@ -70,9 +70,7 @@ urlpatterns = [
          name='password_reset_confirm'),
     path('auth/reset/done/', auth_views.PasswordResetCompleteView.as_view(),
          name='password_reset_complete'),
-    
-    # allauth urls ------------------------------------------------------------
-    path('test-email/', test_email_view),
+
 ]
 # serve media files in development environment --------------------------------
 if settings.DEBUG:

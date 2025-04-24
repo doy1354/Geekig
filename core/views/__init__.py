@@ -1,7 +1,7 @@
 """Core > views > __init__.py"""
 from .registration import (
     SignupView, LoginView, EmailVerification, IndexView,
-    CustomPasswordResetView, test_email_view
+    CustomPasswordResetView
 )
 from .utlites import activate, update_session_language
 
@@ -10,5 +10,5 @@ from .utlites import activate, update_session_language
 # this is very useful especially when using from .file import *
 __all__ = [
     SignupView, LoginView, EmailVerification, IndexView, activate,
-    update_session_language, CustomPasswordResetView, test_email_view
+    update_session_language, CustomPasswordResetView
 ]

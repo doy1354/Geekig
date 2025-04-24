@@ -152,19 +152,3 @@ class IndexView(TemplateView):
             return redirect('login')
         # render the index template
         return super().get(request, *args, **kwargs)
-    
-from django.core.mail import send_mail
-from django.http import HttpResponse
-
-def test_email_view(request):
-    try:
-        send_mail(
-            subject='Password Reset Test',
-            message='এইটা একটা টেস্ট ইমেইল। SMTP কাজ করছে কিনা চেক করার জন্য পাঠানো হয়েছে।',
-            from_email='Accounting <rayhunkhan27@gmail.com>',
-            recipient_list=['rayhunkhan27@gmail.com'],
-            fail_silently=False,
-        )
-        return HttpResponse("✅ ইমেইল সফলভাবে পাঠানো হয়েছে।")
-    except Exception as e:
-        return HttpResponse(f"❌ ইমেইল পাঠাতে সমস্যা: {e}")
