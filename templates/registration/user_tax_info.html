@@ -1,0 +1,76 @@
+{% extends 'base/base.html' %}
+{% load static socialaccount widget_tweaks %}
+
+{% block title_text %}User Tax Info{% endblock %}
+
+{% block css %}
+<style>
+    label {
+        font-size: 12px;
+    }
+</style>
+{% endblock css %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="logo text-center my-3">
+                <img class="w-50" src="{% static 'Geekig/logo.png' %}" alt="">
+            </div>
+            <form method="POST" accept-charset="UTF-8">
+                {% csrf_token %}
+                {% include 'snippets/hidden_fields.html' %}
+
+                <p>Oh dear, the not-so-fun topic – let's dive into</p>
+                <h4><b>The world of taxation 👮🏼‍♂️</b></h4>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1"><b data-i18n="Tax identification number">Tax identification
+                                    number</b></label>
+                            {% render_field form.tax_number class="form-control" %}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            {% render_field form.is_subject_to_vat %}
+                            <label for="exampleInputEmail1" data-i18n="Subject to VAT">Subject to VAT</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="">VAT identification number</label>
+                        {% render_field form.vat_number class="form-control" %}
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">VAT Office</label>
+                            {% render_field form.vat_office class="form-control" %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group my-2 mb-2">
+                    <button type="submit" class="btn btn-primary w-100" data-i18n="next">Next</button>
+                </div>
+
+            </form>
+        </div>
+        <div class="col-md-4">
+            <div
+                style="position: relative; width: 100%; height: 0; padding-top: 200.0000%; padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden; border-radius: 8px; will-change: transform;">
+                <iframe loading="lazy"
+                    style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+                    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAF3UDv79W0&#x2F;view?embed"
+                    allowfullscreen="allowfullscr" </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js_extra %}
+<script src="{% static 'js/passwd_show.js' %}"></script>
+<script src="{% static 'js/btn_loader.js' %}"></script>
+{% endblock js_extra %}

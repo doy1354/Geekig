@@ -1,0 +1,118 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load static socialaccount widget_tweaks %}
+{% block title %}
+    <title>{% block title_text %}Geekig{% endblock title_text %} || Sign In</title>
+{% endblock title %}
+{% block extra_css %}
+<style>
+    .g-recaptcha {
+    height: 78px;
+    min-height: 78px;
+    margin-bottom: 20px;
+  }
+</style>
+{% endblock extra_css %}
+{% block content %}
+<section class="auth-page-wrapper py-5 position-relative d-flex align-items-center justify-content-center min-vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card mb-0 border-0 shadow-none mb-0 p-2">
+                    <div class="lan">
+                        <select id="languageSelector" class="mb-3" style="border: navajowhite;
+                    background: transparent;
+                    float: right;
+                    font-size: 16px;">
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                        <option value="pt">Português</option>
+                        <option value="lu">Lëtzebuergesch</option>
+                    </select>
+                    </div>
+                    <div class="card-body p-sm-5 m-lg-4" style="padding: 0 !important;">
+                        <div class="text-center mt-2">
+                            <h5 class="fs-3xl mt-4" data-i18n="signin">Sign In</h5>
+                        </div>
+                        <div class="p-2 mt-5">
+                            <form method="POST" accept-charset="UTF-8">
+                                {% csrf_token %}
+                                {% include 'snippets/hidden_fields.html' %}
+                                <div class="mb-4 auth-buttons">
+                                    <div class="row">
+                                        <div class="col-xl-12 col-md-12 col-lg-12 mb-2">
+                                            <a href="{% provider_login_url 'google' %}" class="btn green-border  w-100"
+                                                type="submit"><img src="{% static 'assets/images/google.png' %}" alt="google"
+                                                    class="me-2"> Continue
+                                                with Google</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="username" class="form-label" data-i18n="emails">Email<span
+                                            class="text-danger">*</span></label>
+                                    <div class="position-relative ">
+                                        {% render_field form.username class="form-control" id="username" placeholder="Enter email" %}
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <label class="form-label" for="password-input" data-i18n="password">Password <span
+                                        class="text-danger">*</span></label>
+                                    <div class="input-group mb-3">
+                                        {% render_field form.password class="form-control pe-5 password-input2" id="password" placeholder="Enter password" aria-describedby="basic-addon3" %}
+                                        <span class="input-group-text cursor-pointer password-eye" id="basic-addon3"><span class="mdi mdi-eye" style="font-size: 16px;"></span></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
+                                    <label class="form-check-label" for="auth-remember-check" data-i18n="remember_me">Remember me
+                                        Later</label>
+                                    <div class="float-end">
+                                        <a href="{% url 'password_reset' %}" class="text-danger" data-i18n="forgot_pass">Forgot password?</a>
+                                    </div>
+                                </div>
+                                <div class="mt-4 auth-buttons">
+                                    <button class="btn btn-dark w-100" type="submit" data-i18n="signin">Sign In</button>
+                                </div>
+                            </form>
+
+                            <div class="text-center mt-5">
+                                <p class="mb-0" data-i18n="dont_have_account">Don't have an account ?  </p>
+                                <a href="{% url 'signup' %}"
+                                        class="fw-semibold text-primary  text-decoration-underline" data-i18n="signup"> SignUp</a>
+                            </div>
+                        </div>
+                    </div><!-- end card body -->
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+    <!--end container-->
+</section>
+{% endblock %}
+{% block extra_js %}
+    <script src="{% static 'js/passwd_show.js' %}"></script>
+    <script src="{% static 'js/btn_loader.js' %}"></script>
+    <script src="{% static 'js/translation.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+
+        // password-eye
+        $(".password-eye").click(function(){
+            var input = $(".password-eye").prev("input");
+            if(input.attr("type") == "password"){
+                input.attr("type", "text");
+                $(".password-eye").html('<span class="mdi mdi-eye-off" style="font-size: 16px;"></span>');
+            }else{
+                input.attr("type", "password");
+                $(".password-eye").html('<span class="mdi mdi-eye" style="font-size: 16px;"></span>');
+            }
+        });
+        });
+    </script>
+{% endblock extra_js %}

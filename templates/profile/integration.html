@@ -1,0 +1,53 @@
+{% extends 'profile/profile_base.html' %}
+{% load static widget_tweaks %}
+{% block title_text %}Profile{% endblock %}
+
+{% block profile %}
+<div class="row g-3">
+    <div class="col-lg-3 col-md-6">
+        <div class="coming-soon">
+            <h4 class="coming-soon-text" data-i18n="coming_soon">Coming Soon </h4>
+            <div class="market-card">
+                <h4 class="shopify-text">Shopify</h4>
+                <img src="{% static 'assets/images/shopify.svg' %}" alt="cms logo">
+                <p>Set up payments and shipping, and start selling.</p>
+                <div class="tags">
+                    <span class="badge bg-success-subtle text-success">Bankk</span>
+                    <span class="badge bg-success-subtle text-success">Collection</span>
+                    <span class="badge bg-warning-subtle text-warning">Sale</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="coming-soon">
+            <h4 class="coming-soon-text">Coming Soon </h4>
+            <div class="market-card">
+                <h4 class="shopify-text">Stripe</h4>
+                <img src="{% static 'assets/images/stripe.png' %}" alt="cms logo">
+                <p>Set up payments and shipping, and start selling.</p>
+                <div class="tags">
+                    <span class="badge bg-success-subtle text-success">Bankk</span>
+                    <span class="badge bg-success-subtle text-success">Collection</span>
+                    <span class="badge bg-warning-subtle text-warning">Sale</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="coming-soon">
+            <h4 class="coming-soon-text">SumUp </h4>
+            <div class="market-card">
+                <h4 class="shopify-text">Shopify</h4>
+                <img src="{% static 'assets/images/sumup.png' %}" alt="cms logo">
+                <p>Set up payments and shipping, and start selling.</p>
+                <div class="tags">
+                    <span class="badge bg-success-subtle text-success">Bankk</span>
+                    <span class="badge bg-success-subtle text-success">Collection</span>
+                    <span class="badge bg-warning-subtle text-warning">Sale</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock profile %}

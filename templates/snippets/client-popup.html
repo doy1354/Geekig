@@ -1,0 +1,40 @@
+{% load static %}
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalToggleLabel" data-i18n="choiceclienttype">Choice Client Type</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p data-i18n="select_client_type">Select Client Type</p>
+
+                <div class="client-choose">
+                    <div class="client-select client_type" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-obj-type="particular">
+                        <img src="{% static 'assets/images/client-1.png' %}" alt="client-1">
+                        <p data-i18n="individualclient">Personal</p>
+                    </div>
+                    <div class="client-select client_type" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-obj-type="professional">
+                        <img src="{% static 'assets/images/client-2.png' %}" alt="client-1">
+                        <p data-i18n="professionals">Professional</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModalToggle2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-white" id="exampleModalToggleLabel2" data-i18n="clientinformation">Client Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card" id="my-client-type">
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

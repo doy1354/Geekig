@@ -1,0 +1,359 @@
+{% extends 'base/dashboard_base.html' %}
+{% load static %}
+{% block title_text %}Profile{% endblock %}
+
+{% block extra_css %}
+<style>
+    .file {
+        width: 100%;
+        display: block;
+        border: 1px solid #5D6FCE;
+        border-radius: 15px;
+        padding: 0px 10px;
+        color: #5D6FCE;
+    }
+    input[type="file"]{
+        display: none;
+      }
+
+      label{
+        cursor:pointer;
+      }
+      
+      .imageName{
+        color:green;
+      }
+      .imageNames{
+        color:green;
+      }
+      #example_length, #example_filter{
+        display: none;
+      }
+      
+</style>
+{% endblock extra_css %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Nav tabs -->
+    <div class="bank-tabs">
+        <ul class="nav w-100 nav-tabs nav-tabs-custom nav-dark baank mb-3" role="tablist">
+        <li class="nav-item">
+
+        </li>
+        <li class="nav-item">
+
+            {% url 'user_activity' user_context.pk as path %}
+            <a class="nav-link {% if request.path == path %}active{% endif %}" href="{{ path }}" data-i18n="activity">
+                Activity
+            </a>
+        </li>
+        <li class="nav-item">
+          
+            {% url 'get_user_bank' user_context.pk as path %}
+            <a href="{{ path }}" class="nav-link {% if request.path == path %}active{% endif %}" data-i18n="nav_bank">
+                Bank
+            </a>
+        </li>
+        <li class="nav-item">
+            {% url 'user_integration' user_context.pk as path %}
+            <a class="nav-link {% if request.path == path %}active{% endif %}" href="{{ path }}" data-i18n="integration">
+                Integration
+            </a>
+        </li>
+        <li class="nav-item">
+            {% url 'user_affiliation' user_context.pk as path %}
+            <a class="nav-link {% if request.path == path %}active{% endif %}" href="{{ path }}" data-i18n="Affiliation">
+                Affiliation
+            </a>
+        </li>
+        <li class="nav-item">
+            {% url 'organization:organization_manage' as org %}
+            <a class="nav-link {% if request.path == org %}active{% endif %}" href="{{ org }}">
+                Invitation
+            </a>
+        </li>
+        <!-- <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#profile2" role="tab">
+                task
+            </a>
+        </li> -->
+        </ul>
+    </div>
+    <div class="card bg-transparent shadow-none">
+        <div class="card-body p-0 ">
+            <!-- Tab panes -->
+            <div class="tab-content text-muted">
+                {% block profile %}
+                {% endblock profile %}
+            </div>
+        </div>
+    </div><!-- end card-body -->
+</div><!-- end card -->
+{% endblock content %}
+
+
+
+{% block extra_js %}
+<script src="{% static 'js/passwd_show.js' %}"></script>
+<script src="{% static 'js/btn_loader.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{% static 'js/translation.js' %}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfIFQFEGJ3snlXb8VnRK06CJMYrUiFppI&libraries=places&callback=initAutocomplete" async defer></script>
+<script>
+  function initAutocomplete() {
+        var autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById('id_activity_address')
+        );
+
+        autocomplete.addListener('place_changed', function() {
+            var place = autocomplete.getPlace();
+        });
+    }
+    
+    $(document).ready(function () {
+        // Remove the elements containing the specified text
+        $('.actions:contains("Currently:")').contents().filter(function() {
+            return this.nodeType === 3 && this.nodeValue.includes("Currently:");
+        }).remove();
+
+        $('.actions:contains("Change:")').contents().filter(function() {
+            return this.nodeType === 3 && this.nodeValue.includes("Change:");
+        }).remove();
+
+        $('label:contains("Clear")').contents().filter(function() {
+            return this.nodeType === 3; // Filter text nodes
+        }).remove();
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+            // Check initial state of the checkbox
+            var checkbox = $("#id_is_subject_to_vat");
+            var taxIdentificationBlock = $("#tax-identification");
+
+            if (checkbox.prop("checked")) {
+                taxIdentificationBlock.show();
+            } else {
+                taxIdentificationBlock.hide();
+            }
+
+            // Add event listener for checkbox changes
+            checkbox.change(function () {
+                if ($(this).prop("checked")) {
+                    taxIdentificationBlock.show();
+                } else {
+                    taxIdentificationBlock.hide();
+                }
+            });
+        });
+    $(document).ready(function () {
+        $(".document").click(function () {
+            var data = $(this).attr('data-url');
+            $("#iframe").attr('src', data);
+        });
+        $(".document-delete").click(function (){
+            Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+            customClass: {
+                cancelButton: 'custom-cancel-button-class', // Add a custom class to the delete button
+                confirmButton: 'custom-delete-button-class', // Add a custom class to the delete button
+            },
+            buttonsStyling: false, // Disable default styling for buttons
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var name = $(this).attr('data-name');
+                var data = $(this).attr('data');
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+                $.ajax({
+                    url: "{% url 'user_doc_delete' %}",
+                    data: {
+                        'type': name,
+                        'user_pk': data,
+                    },
+                    success: function (data) {
+                        location.reload()
+                    },
+                });
+            }
+        });
+        });
+    });
+</script>
+<script>
+
+    new DataTable('#example');
+    
+            
+    // type_activity
+    $("#id_is_another_activity").click(function () {
+        if ($(this).is(':checked')) {
+            $(".type_activity").show();
+        } else {
+            $(".type_activity").hide();
+        }
+    });
+    $("#id_is_another_activity").ready(function () {
+        if ($("#id_is_another_activity").is(':checked')) {
+            $(".type_activity").show();
+        } else {
+            $(".type_activity").hide();
+        }
+    });
+
+
+
+    // company_2
+    $("#id_is_supplementary_retirement_coverage").click(function () {
+        if ($(this).is(':checked')) {
+            $(".company_2").show();
+        } else {
+            $(".company_2").hide();
+        }
+    });
+    $("#id_is_supplementary_retirement_coverage").ready(function () {
+        if ($("#id_is_supplementary_retirement_coverage").is(':checked')) {
+            $(".company_2").show();
+        } else {
+            $(".company_2").hide();
+        }
+    });
+
+    // vat-h
+    $("#id_is_subject_to_vat").click(function () {
+        if ($(this).is(':checked')) {
+            $(".vat-h").show();
+            $("#id_vat_number").attr('required', true);
+        } else {
+            $(".vat-h").hide();
+        }
+    });
+    $("#id_is_subject_to_vat").ready(function () {
+        if ($("#id_is_subject_to_vat").is(':checked')) {
+            $(".vat-h").show();
+        } else {
+            $(".vat-h").hide();
+        }
+    });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#id_or_pass").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#id_or_pass_file").text(inputImage);
+            $(".id_file").hide();
+            $(".id_not_upload").hide();
+            $(".id_upload").show();
+        });
+        $("#proof_of_address").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#proof_of_address_file").text(inputImage);
+            $(".address_file").hide();
+            $(".address_not_upload").hide();
+            $(".address_upload").show();
+        });
+        $("#lease_or_domiciliation").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#lease_or_domiciliation_file").text(inputImage);
+            $(".lease_file").hide();
+            $(".lease_not_upload").hide();
+            $(".lease_upload").show();
+        });
+        $("#establishment_permit").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#establishment_permit_file").text(inputImage);
+            $(".permit_file").hide();
+            $(".permit_not_upload").hide();
+            $(".permit_upload").show();
+        });
+        $("#trade_register_certificate").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#trade_register_certificate_file").text(inputImage);
+            $(".certificate_file").hide();
+            $(".certificate_not_upload").hide();
+            $(".certificate_upload").show();
+        });
+        $("#vat_certificate").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#vat_certificate_file").text(inputImage);
+            $(".vat_c_file").hide();
+            $(".vat_c_not_upload").hide();
+            $(".vat_c_upload").show();
+        });
+        $("#proof_of_ccss_registration").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#proof_of_ccss_registration_file").text(inputImage);
+            $(".ccss_registration_file").hide();
+            $(".ccss_registration_not_upload").hide();
+            $(".ccss_registration_upload").show();
+        });
+        $("#your_logo").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#your_logo_file").text(inputImage);
+            $(".logo_file").hide();
+            $(".logo_not_upload").hide();
+            $(".logo_upload").show();
+        });
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery.formset.min.js' %}"></script>
+
+<script type="text/javascript">
+    console.log("Attempting to initialize formset...");
+
+    console.log($(".inline.{{ form_member.prefix }}"));
+    $(function () {
+        $(".inline.{{ form_member.prefix }}").formset({
+            prefix: "{{ form_member.prefix }}",
+            addCssClass: "btn btn-success", // Apply only the button classes without "add-row"
+            deleteCssClass: "btn btn-danger", // Apply only the button classes without "delete-row"
+            addText: '<i class="fas fa-plus"></i> Add User', // Example with Font Awesome icon
+            deleteText: '<i class="fas fa-trash"></i>', // Example with Font Awesome icon
+            formCssClass: "inline-form",
+        });
+    });
+</script>
+
+<!-- Include Dropzone.js -->
+<script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.3/dist/min/dropzone.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $(".dataTables_filter label").contents().each(function () {
+            if (this.nodeType === 3 && this.nodeValue.includes('Search:')) {
+                // Replace the text node with an empty string
+                this.nodeValue = this.nodeValue.replace('Search:', '');
+            }
+        });
+        $(".dataTables_filter label input").attr("placeholder", "Search")
+
+
+
+
+    });
+
+</script>
+
+
+
+{% endblock %}

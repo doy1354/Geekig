@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" data-layout="vertical" data-sidebar="light" data-sidebar-size="lg" data-preloader="disable"
+    data-theme="default" data-topbar="light" data-bs-theme="light">
+
+<head>
+    <meta charset="utf-8" />
+    {% block title %}
+    <title>{% block title_text %}Leaf{% endblock title_text %} || Login</title>
+    {% endblock title %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="Mainuddin-Sani Dashboard Template" name="description" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'assets/images/fav.png' %}" />
+
+    <!-- Fonts css load -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link id="fontsLink"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <!--datatable css-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+    <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Layout config Js -->
+    <script src="{% static 'assets/js/layout.js' %}"></script>
+    <!-- Bootstrap Css -->
+    <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/huge-icons/huge-icons.min.css" />
+    <!-- App Css-->
+    <link href="{% static 'assets/css/app.css' %}" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css" />
+    {% block extra_css %}
+    {% endblock extra_css %}
+</head>
+
+<body>
+
+    {% block content %}
+
+    {% endblock content %}
+
+
+    <!-- JAVASCRIPT -->
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="{% static 'assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/libs/simplebar/simplebar.min.js' %}"></script>
+    {% block extra_js %}
+    {% endblock extra_js %}
+</body>
+
+</html>

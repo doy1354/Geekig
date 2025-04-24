@@ -1,0 +1,114 @@
+{% extends 'base/base.html' %}
+{% load static widget_tweaks %}
+
+{% block title_text %}Almost Done{% endblock %}
+
+{% block css %}
+<style>
+    body {
+        background: #0080F6;
+    }
+</style>
+{% endblock css %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 m-auto">
+            <div class="logo text-center my-3">
+                <img class="w-25" style="border-radius: 20px;" src="{% static 'Geekig/logo.png' %}" alt="">
+            </div>
+
+            <h2 class="text-center text-white"><b>🎉 Congratulations, you've crossed the finish line! 🏁</b></h2>
+            <p class="text-white mt-5 mb-3">Well done! </p>
+            <p class="text-white">Your registration journey is nearly complete, but the real adventure is just
+                beginning. Get ready for a tax and reporting management experience as enjoyable as a board game.</p>
+            <p class="text-white my-4"><b style="color: #000;">magine</b> no more headaches with numbers; we turn
+                complex tasks into a game! You'll navigate the finance world with the ease of a race car driver.</p>
+            <p class="text-white mb-3"><b style="color: #000;">Ready for takeoff?</b> Fasten your seatbelt, activate
+                autopilot mode, and watch your business soar to new heights. Welcome to a future where financial
+                management equals peace of mind and smiles. 🚀😄
+            </p>
+            <div class="form-group mt-4 mb-2 text-center">
+                <a href="{% url 'price:user_card' %}" class="btn btn-light w-25" style="border-radius: 25px;">Let’s
+                    start ! 👍</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div
+                style="position: relative; width: 100%; height: 0; padding-top: 200.0000%; padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden; border-radius: 8px; will-change: transform;">
+                <iframe loading="lazy"
+                    style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+                    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAF3UDv79W0&#x2F;view?embed"
+                    allowfullscreen="allowfullscr" </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js_extra %}
+<script src="{% static 'js/passwd_show.js' %}"></script>
+<script src="{% static 'js/btn_loader.js' %}"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#id_or_pass").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#id_or_pass_file").text(inputImage);
+            $(".id_file").hide();
+            $(".id_not_upload").hide();
+            $(".id_upload").show();
+        });
+        $("#proof_of_address").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#proof_of_address_file").text(inputImage);
+            $(".address_file").hide();
+            $(".address_not_upload").hide();
+            $(".address_upload").show();
+        });
+        $("#lease_or_domiciliation").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#lease_or_domiciliation_file").text(inputImage);
+            $(".lease_file").hide();
+            $(".lease_not_upload").hide();
+            $(".lease_upload").show();
+        });
+        $("#establishment_permit").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#establishment_permit_file").text(inputImage);
+            $(".permit_file").hide();
+            $(".permit_not_upload").hide();
+            $(".permit_upload").show();
+        });
+        $("#trade_register_certificate").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#trade_register_certificate_file").text(inputImage);
+            $(".certificate_file").hide();
+            $(".certificate_not_upload").hide();
+            $(".certificate_upload").show();
+        });
+        $("#vat_certificate").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#vat_certificate_file").text(inputImage);
+            $(".vat_c_file").hide();
+            $(".vat_c_not_upload").hide();
+            $(".vat_c_upload").show();
+        });
+        $("#proof_of_ccss_registration").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#proof_of_ccss_registration_file").text(inputImage);
+            $(".ccss_registration_file").hide();
+            $(".ccss_registration_not_upload").hide();
+            $(".ccss_registration_upload").show();
+        });
+        $("#your_logo").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#your_logo_file").text(inputImage);
+            $(".logo_file").hide();
+            $(".logo_not_upload").hide();
+            $(".logo_upload").show();
+        });
+    });
+</script>
+{% endblock %}

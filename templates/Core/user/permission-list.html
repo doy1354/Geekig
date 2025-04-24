@@ -1,0 +1,69 @@
+{% extends 'Core/user/user-base.html' %}
+
+{% block user %}
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="all_user">User</label>
+                            <select name="user" id="all_user" class="form-control border">
+                                <option value="">----------</option>
+                                {% for user in users %}
+                                <option value="{{ user.pk }}">{{ user.email }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <p class="mb-0">Choice User</p>
+                            <table class="table">
+                                <tr>
+                                    <th></th>
+                                    <th>Organization</th>
+                                    <th>User Email</th>
+                                </tr>
+                                {% for member in select_user %}
+                                <tr>
+                                    <td><input type="checkbox" name="check_user" id="" value="{{ member.user.pk }}"></td>
+                                    <td>{{ member.organization }}</td>
+                                    <td>{{ member.user.email }}</td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="col-md-6 mt-3" id="remove_user">
+                            
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock user %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function () {
+        $("#all_user").change(function (){
+            let id = $(this).val();
+            $.ajax({
+                url: "{% url 'core:remove_user_permission' %}",
+                data: {
+                    'value': id,
+                },
+                success: function (data) {
+                    console.log(data);
+                    $("#remove_user").html(data);
+                }
+            })
+        })
+    })
+</script>
+{% endblock extra_js %}

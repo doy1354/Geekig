@@ -1,0 +1,43 @@
+{% load static humanize %}
+<form action="" method="get" id="formId">
+    <div class="row mb-4 g-3">
+      <div class="col-xl-3 col-lg-6 col-sm-6">
+        <div class="sales-card wallate {% if request.GET.searchAmount == 'totalAmount' %}active{% endif %}" data-id="totalAmount">
+            <div class="sales-icons">
+                <i class="ri-wallet-3-fill"></i>
+            </div>
+            <p data-i18n="total_amount">Total Amount</p>
+            <h5>EUR {% if total_amount %}{{ total_amount|floatformat:2|intcomma }}{% else %}0{% endif %}</h5>
+        </div>
+    </div>
+      <div class="col-xl-3 col-lg-6 col-sm-6">
+        <div class="sales-card withdraw {% if request.GET.searchAmount == 'Pending' %}active{% endif %}" data-id="Pending">
+          <div class="sales-icons">
+            <i class="bx bx-money-withdraw"></i>
+          </div>
+          <p data-i18n="totalpending">Total Pending</p>
+          <h5>EUR {% if total_pending %}{{ total_pending|floatformat:2|intcomma }}{% else %}0{% endif %}</h5>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-sm-6">
+        <div class="sales-card due {% if request.GET.searchAmount == 'Due' %}active{% endif %}" data-id="Due">
+          <div class="sales-icons">
+            <i class="ri-arrow-up-down-fill"></i>
+          </div>
+          <p data-i18n="totaldue">Total Due</p>
+          <h5>EUR {% if total_due %}{{ total_due|floatformat:2|intcomma }}{% else %}0{% endif %}</h5>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-sm-6">
+        <div class="sales-card paid {% if request.GET.searchAmount == 'Paid' %}active{% endif %}" data-id="Paid">
+          <div class="sales-icons">
+            <i class="ri-wallet-2-fill"></i>
+  
+          </div>
+          <p data-i18n="totalpaid">Total Paid</p>
+          <h5>EUR {% if total_paid %}{{ total_paid|floatformat:2|intcomma }}{% else %}0{% endif %}</h5>
+        </div>
+      </div>
+      <button type="submit" id="submitData" name="searchAmount" value="" style="display: none;">Submit</button>
+    </div>
+  </form>

@@ -1,0 +1,363 @@
+{% extends 'base/base.html' %}
+{% load static widget_tweaks %}
+
+{% block title_text %}Document{% endblock %}
+
+{% block css %}
+<style>
+    body {
+        background: #0080F6;
+    }
+
+    .file {
+        width: 100%;
+        display: block;
+        border: 1px solid #5D6FCE;
+        border-radius: 15px;
+        padding: 0px 10px;
+        color: #5D6FCE;
+    }
+
+    input[type="file"] {
+        display: none;
+    }
+
+    label {
+        cursor: pointer;
+    }
+
+    .imageName {
+        color: green;
+    }
+
+    .imageNames {
+        color: green;
+    }
+
+    .status i {
+        font-size: 22px;
+    }
+
+    .status .fa-times-circle {
+        color: #FF8E47;
+    }
+
+    .status .fa-check-circle {
+        color: #21B86E;
+        display: none;
+    }
+</style>
+{% endblock css %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="logo text-center my-3">
+                <img class="w-25" style="border-radius: 20px;" src="{% static 'Geekig/logo.png' %}" alt="">
+            </div>
+
+            <h2 class="text-center text-white"><b>Download your documents to wrap up your file 📂</b></h2>
+            <p class="text-center text-white">Smart move! Get it done with your smartphone.</p>
+            <div class="text-center">
+                <img style="width: 55px; height: 55px; border-radius: 10px;" src="{% static 'Geekig/apps1.png' %}"
+                    alt="">
+                <img style="width: 55px; height: 55px; border-radius: 10px;" src="{% static 'Geekig/apps2.png' %}"
+                    alt="">
+            </div>
+            <form method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% include 'snippets/hidden_fields.html' %}
+                <h6 class="text-white">Personal documents</h6>
+                <div class="personal card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="id_or_pass" data-i18n="ID card or passport">ID card or passport</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="status">
+                                            <i class="fas fa-check-circle id_upload"></i>
+                                            <i class="fas fa-times-circle id_not_upload"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <span id="id_or_pass_file" style="color: #21B86E;"></span>
+                                        <label for="id_or_pass">
+                                            <div class="file id_file">
+                                                <i class="fas fa-file-upload"></i> Upload
+                                            </div>
+                                            {% render_field form.id_or_pass class="form-control hide_file"
+                                            id="id_or_pass" %}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="proof_of_address" data-i18n="Proof of address">Proof of address</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="status">
+                                            <i class="fas fa-check-circle address_upload"></i>
+                                            <i class="fas fa-times-circle address_not_upload"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <span id="proof_of_address_file" style="color: #21B86E;"></span>
+                                        <label for="proof_of_address">
+                                            <div class="file address_file">
+                                                <i class="fas fa-file-upload"></i> Upload
+                                            </div>
+                                            {% render_field form.proof_of_address class="form-control hide_file"
+                                            id="proof_of_address" %}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="lease_or_domiciliation" data-i18n="Lease or domiciliation contract">Lease or
+                                    domiciliation contract</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="status">
+                                            <i class="fas fa-check-circle lease_upload"></i>
+                                            <i class="fas fa-times-circle lease_not_upload"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <span id="lease_or_domiciliation_file" style="color: #21B86E;"></span>
+                                        <label for="lease_or_domiciliation">
+                                            <div class="file lease_file">
+                                                <i class="fas fa-file-upload"></i> Upload
+                                            </div>
+                                            {% render_field form.lease_or_domiciliation class="form-control hide_file"
+                                            id="lease_or_domiciliation" %}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <h6 class="text-white">Activity documents</h6>
+                <div class="personal card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="establishment_permit" data-i18n="Establishment permit">Establishment
+                                    permit</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="status">
+                                            <i class="fas fa-check-circle permit_upload"></i>
+                                            <i class="fas fa-times-circle permit_not_upload"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <span id="establishment_permit_file" style="color: #21B86E;"></span>
+                                        <label for="establishment_permit">
+                                            <div class="file permit_file">
+                                                <i class="fas fa-file-upload"></i> Upload
+                                            </div>
+                                            {% render_field form.establishment_permit class="form-control hide_file"
+                                            id="establishment_permit" %}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="trade_register_certificate" data-i18n="Trade Register Certificate">Trade
+                                    Register Certificate</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="status">
+                                            <i class="fas fa-check-circle certificate_upload"></i>
+                                            <i class="fas fa-times-circle certificate_not_upload"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <span id="trade_register_certificate_file" style="color: #21B86E;"></span>
+                                        <label for="trade_register_certificate">
+                                            <div class="file certificate_file">
+                                                <i class="fas fa-file-upload"></i> Upload
+                                            </div>
+                                            {% render_field form.trade_register_certificate class="form-control
+                                            hide_file" id="trade_register_certificate" %}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="vat_certificate" data-i18n="VAT Certificate">VAT Certificate</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="status">
+                                            <i class="fas fa-check-circle vat_c_upload"></i>
+                                            <i class="fas fa-times-circle vat_c_not_upload"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <span id="vat_certificate_file" style="color: #21B86E;"></span>
+                                        <label for="vat_certificate">
+                                            <div class="file vat_c_file">
+                                                <i class="fas fa-file-upload"></i> Upload
+                                            </div>
+                                            {% render_field form.vat_certificate class="form-control hide_file"
+                                            id="vat_certificate" %}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="proof_of_ccss_registration" data-i18n="Proof of CCSS registration">Proof of
+                                    CCSS registration</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="status">
+                                            <i class="fas fa-check-circle ccss_registration_upload"></i>
+                                            <i class="fas fa-times-circle ccss_registration_not_upload"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <span id="proof_of_ccss_registration_file" style="color: #21B86E;"></span>
+                                        <label for="proof_of_ccss_registration">
+                                            <div class="file ccss_registration_file">
+                                                <i class="fas fa-file-upload"></i> Upload
+                                            </div>
+                                            {% render_field form.proof_of_ccss_registration class="form-control
+                                            hide_file" id="proof_of_ccss_registration" %}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="your_logo">Your logo</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="status">
+                                            <i class="fas fa-check-circle logo_upload"></i>
+                                            <i class="fas fa-times-circle logo_not_upload"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <span id="your_logo_file" style="color: #21B86E;"></span>
+                                        <label for="your_logo">
+                                            <div class="file logo_file">
+                                                <i class="fas fa-file-upload"></i> Upload
+                                            </div>
+                                            {% render_field form.your_logo class="form-control hide_file" id="your_logo"
+                                            %}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group my-2 mb-2 text-center">
+                    <button type="submit" class="btn btn-light w-25" data-i18n="next">Next</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block extra_js %}
+<script src="{% static 'js/passwd_show.js' %}"></script>
+<script src="{% static 'js/btn_loader.js' %}"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#id_or_pass").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#id_or_pass_file").text(inputImage);
+            $(".id_file").hide();
+            $(".id_not_upload").hide();
+            $(".id_upload").show();
+        });
+        $("#proof_of_address").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#proof_of_address_file").text(inputImage);
+            $(".address_file").hide();
+            $(".address_not_upload").hide();
+            $(".address_upload").show();
+        });
+        $("#lease_or_domiciliation").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#lease_or_domiciliation_file").text(inputImage);
+            $(".lease_file").hide();
+            $(".lease_not_upload").hide();
+            $(".lease_upload").show();
+        });
+        $("#establishment_permit").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#establishment_permit_file").text(inputImage);
+            $(".permit_file").hide();
+            $(".permit_not_upload").hide();
+            $(".permit_upload").show();
+        });
+        $("#trade_register_certificate").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#trade_register_certificate_file").text(inputImage);
+            $(".certificate_file").hide();
+            $(".certificate_not_upload").hide();
+            $(".certificate_upload").show();
+        });
+        $("#vat_certificate").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#vat_certificate_file").text(inputImage);
+            $(".vat_c_file").hide();
+            $(".vat_c_not_upload").hide();
+            $(".vat_c_upload").show();
+        });
+        $("#proof_of_ccss_registration").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#proof_of_ccss_registration_file").text(inputImage);
+            $(".ccss_registration_file").hide();
+            $(".ccss_registration_not_upload").hide();
+            $(".ccss_registration_upload").show();
+        });
+        $("#your_logo").change(function () {
+            var inputImage = $(this).val().split('\\')[2]
+            $("#your_logo_file").text(inputImage);
+            $(".logo_file").hide();
+            $(".logo_not_upload").hide();
+            $(".logo_upload").show();
+        });
+    });
+</script>
+{% endblock %}

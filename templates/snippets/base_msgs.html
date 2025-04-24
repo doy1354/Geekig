@@ -1,0 +1,9 @@
+{% if messages %}
+    <ul class="messages mb-1 {% block msgs-ul-override %}{% endblock msgs-ul-override %}">
+        {% for message in messages %}
+            <li class="alert alert-danger fade show m-0 {% if message.tags %}{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}" role="alert">
+                {{ message }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

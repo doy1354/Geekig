@@ -1,0 +1,88 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load static socialaccount widget_tweaks %}
+{% block title %}
+<title>{% block title_text %}Geekig{% endblock title_text %} || Sign In</title>
+{% endblock title %}
+{% block extra_css %}
+
+{% endblock extra_css %}
+{% block content %}
+<section class="auth-page-wrapper py-5 position-relative d-flex align-items-center justify-content-center min-vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card mb-0 border-0 shadow-none mb-0 p-2">
+                    <div class="lan">
+                        <select id="languageSelector" class="mb-3" style="border: navajowhite;
+                    background: transparent;
+                    float: right;
+                    font-size: 16px;">
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                        <option value="pt">Português</option>
+                        <option value="lu">Lëtzebuergesch</option>
+                    </select>
+                    </div>
+                    <div class="card-body p-sm-5 m-lg-4">
+                        <div class="text-center mt-2">
+                            <h5 class="fs-3xl">Hi {{ request.user }},</h5>
+                        </div>
+                        <div class="p-2 mt-5">
+                            <form method="POST" accept-charset="UTF-8">
+                                {% csrf_token %}
+                                {% include 'snippets/hidden_fields.html' %}
+
+
+                                <div class="row pt-3">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label for="active" class="form-label" data-i18n="Activity Name">Activity Name</label>
+                                            {% render_field form.company1 class="form-control" placeholder="Activity Name" %}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label for="active" class="form-label" data-i18n="commercenumber">Business Registration Number</label>
+                                            {% render_field form.company_reg_no class="form-control" placeholder="Activity registration number" %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="form-check d-flex">
+                                        {{ form.is_accept|add_class:"form-check-input" }}
+                                        <label class="form-check-label mb-0 fs-xs text-muted " for="invalidCheck2">
+                                            <span data-i18n="privacy_policy_1">By Creating you agree with</span> 
+                                            <a href="" class="text-dark text-decoration-underline fst-normal fw-medium">
+                                                <span data-i18n="privacy_policy_2">Privacy Policy</span>
+                                            </a> 
+                                            <span data-i18n="privacy_policy_3">and</span> 
+                                            <a href="#" class="text-dark text-decoration-underline fst-normal fw-medium"><span data-i18n="privacy_policy_4">Terms</span></a>
+                                            <span data-i18n="privacy_policy_5">and Conditions.</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+
+                                <div class="mt-4 auth-buttons">
+                                    <button class="btn btn-dark w-100" type="submit" data-i18n="next">Next</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div><!-- end card body -->
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+    <!--end container-->
+</section>
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'js/passwd_show.js' %}"></script>
+<script src="{% static 'js/btn_loader.js' %}"></script>
+<script src="{% static 'js/translation.js' %}"></script>
+{% endblock extra_js %}

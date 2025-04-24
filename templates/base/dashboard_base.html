@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+{% load static widget_tweaks %}
+<html lang="en" data-layout="vertical" data-sidebar="light" data-sidebar-size="lg" data-preloader="disable"
+    data-theme="default" data-topbar="light" data-bs-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+    <title>{% block title_text %}Base{% endblock title_text %} | Geekig</title>
+    {% endblock title %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta content="Geekig Dashboard Template" name="description" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{% static 'assets/images/fav.png' %}" />
+
+    <!-- Fonts css load -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link id="fontsLink"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <!--datatable css-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+
+    <!-- Layout config Js -->
+    <script src="{% static 'assets/js/layout.js' %}"></script>
+    <!-- Bootstrap Css -->
+    <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/huge-icons/huge-icons.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'assets/libs/dropzone/dropzone.css' %}" type="text/css">
+    <!-- App Css-->
+    <link href="{% static 'assets/css/app.css' %}" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'assets/css/dev-css.css' %}" rel="stylesheet" type="text/css" />
+    <style>
+        @media (max-width: 570px) {
+            .user-choice, .account-settings, .exportcsv, .mobile-none, .document-download {
+                display: none !important;
+            }
+            .bank-tabs ul{
+                width: 100%;
+            }
+            .mobile-50 {
+                width: 50%;
+            }
+            .mobile-49 {
+                width: 49%;
+            }
+        }
+
+#custom-preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#custom-preloader img {
+  width: 300px; /* Adjust the width as needed */
+}
+/* Rayhan */
+.custom-delete-button-class {
+  /* Add your custom styling for the delete button here */
+  background-color: #003030; /* Customize the background color */
+  color: #fff; /* Customize the text color */
+  padding: 5px 15px;
+  border-radius: 5px;
+  margin: 0 5px;
+  border: 2px solid #003030;
+  /* Add any other styles you want */
+}
+.custom-cancel-button-class {
+  color: #003030;
+  border: 2px solid #003030;
+  padding: 5px 15px;
+  border-radius: 5px;
+  background: transparent;
+}
+.custom-cancel-button-class:hover {
+  background: #003030;
+  color: #fff;
+}
+iframe.skiptranslate { visibility: hidden !important; }
+.modal{
+    z-index: 1055 !important;
+}
+.modal-content{
+    z-index: 1055 !important;
+}
+    </style>
+
+    {% block extra_css %}
+    {% endblock extra_css %}
+</head>
+
+<body>
+    <div id="custom-preloader" style="display: none;">
+        <!-- <div id="loading-progress">0%</div> -->
+        <br>
+        <img src="{% static 'assets/images/load.gif' %}" alt="Preloader">
+      </div>
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <!-- ========== App Menu ========== -->
+        {% include 'snippets/sidebar.html' %}
+        <!-- Left Sidebar End -->
+        <header id="page-topbar">
+            <div class="layout-width">
+                <div class="navbar-header">
+                    <div class="d-flex align-items-center">
+                        <!-- LOGO -->
+                        <div class="navbar-brand-box horizontal-logo">
+                            <a href="/" class="logo logo-dark">
+                                Logo
+                            </a>
+                        </div>
+        
+                        <button type="button" class="bbtn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger d-md-none shadow-none bg-transparent border-0" id="topnav-hamburger-icon">
+                            <span class="hamburger-icon">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
+                        </button>
+                        <div>
+                            <h2 class="d-none d-lg-flex align-items-center ">
+                                {% block back_page_icon %}
+                                {% endblock back_page_icon %}
+                                {% if top_title %} {{ top_title|safe }} {% else %}<span data-i18n="payment_overview">Payment Overview</span>{% endif %}
+                                <!-- Button trigger modal -->
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#YoutubeVideoPopup">
+                                    <i class="ri-question-fill gray-color ps-3"></i>
+                                </a>
+                            </h2>
+                        </div>
+                    </div>
+                    <!-- Select User -->
+                    {% block user_selection %}
+                    {% endblock user_selection %}
+
+                    <!-- Search -->
+                    {% block extra_search_form %}
+                    {% endblock extra_search_form %}
+                    <div class="d-flex align-items-center">
+                        <div class="dropdown topbar-head-dropdown ms-1 header-item" id="notificationDropdown">
+                            <!-- <button type="button" class="btn btn-icon btn-topbar btn-ghost-dark rounded-circle">
+                                <img src="{% static 'assets/images/document.png' %}" alt="">
+        
+                            </button> -->
+                            <div class="mx-2"></div>
+                            <div class="hoverdropdwon">
+                                <button type="button" class="btn btn-icon btn-topbar btn-ghost-dark rounded-circle" id="page-link" aria-haspopup="true" aria-expanded="false">
+                                    <img src="{% static 'assets/images/plus.png' %}" alt="">
+                                </button>
+                              </div>
+                            
+                            <div class="mx-2"></div>
+                        
+        
+        
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                                aria-labelledby="page-header-notifications-dropdown" style="width: 700px;">
+                                <div class="dropdown-head rounded-top">
+                                    <div class="p-3 border-bottom border-bottom-dashed">
+                                        <h4>Task</h4>
+                                    </div>
+                                </div>
+        
+                                <div class="py-2 ps-2">
+                                    <div data-simplebar style="max-height: 300px" class="pe-2">
+                                        <table id="allBank" class="table dt-responsive nowrap align-middle" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th data-ordering="false" class="text-uppercase" data-i18n="date">Date </th>
+                                                    <th data-ordering="false" class="text-uppercase" data-i18n="designations">Designation</th>
+                                                    <th class="text-uppercase" data-i18n="amount">Amount</th>
+                                                    <th class="text-uppercase" data-i18n="action">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for my_task in my_tasks %}
+                                                <tr>
+                                                    <td>{{ my_task.value_date|date:"Y/m/d" }}</td>
+                                                    <td>
+                                                        <p class="t-designation mb-0" title="{{ my_task.designation }}">{{ my_task.designation|truncatechars:30 }}</p>
+                                                    </td>
+                                                    
+                                                    <td>
+                                                        <span class="{% if my_task.get_ex_or_in %}text-success{% else %}text-danger{% endif %}"> {{ my_task.currency }} {{ my_task.amount }}</span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="dropdown d-inline-block">
+                                                            <button class="btn btn-subtle-primary btn-sm" data-id="{{ my_task.pk }}" data-bs-toggle="modal" data-bs-target="#exampleModal{{ forloop.counter }}">
+                                                                <i class="ri-links-fill fs-3"></i>
+                                                            </button>
+                                                            
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="dropdown ms-sm-3 header-item topbar-user">
+                                <button type="button" class="btn shadow-none p-2" id="page-header-user-dropdown"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="d-flex align-items-center">
+                                        <img class="rounded-circle header-profile-user" src="{% static 'assets/images/fav.png' %}"
+                                            alt="Header Avatar" />
+                                        <span class="text-start ms-xl-2">
+                                            <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ user_context.company1|default:"" }}</span>
+                                        </span>
+                                    </span>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end p-0">
+                                    <!-- item-->
+                                    <div class="dropdown-item text-center">
+                                        {{ user_context.name }}
+                                    </div>
+                                    <div class="dropdown-item text-center">
+                                        <p class="mb-1">{{ user_context.company1|default:"" }}</p>
+                                        <span class="align-middle">{{ user_context.company_reg_no|default:"" }}</span>
+                                    </div>
+                                    <a class="dropdown-item" href="{% url 'logout' %}">
+                                        <i class="ri-logout-circle-r-line text-muted fs-lg align-middle me-1"></i>
+                                        <span class="align-middle">Logout</span></a>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </header>
+      <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="YoutubeVideoPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="YoutubeVideoPopupLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-white" id="YoutubeVideoPopupLabel">Section tutorial</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- YouTube video embedded using iframe -->
+                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/CHSnz0bCaUk" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- Topbar End -->
+        <!-- Vertical Overlay-->
+        <div class="vertical-overlay"></div>
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+            <div class="page-content">
+                {% block content %}
+                
+                {% endblock content %}
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
+        </div>
+        <!-- end main content-->
+    </div>
+    <!-- END layout-wrapper -->
+
+
+
+    <!-- JAVASCRIPT -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="{% static 'assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/libs/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/translation.js' %}"></script>
+
+    <!-- apexcharts -->
+    <script src="{% static 'assets/libs/apexcharts/apexcharts.min.js' %}"></script>
+
+    <!--datatable js-->
+    <script src="{% static 'assets/libs/cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/libs/cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js' %}"></script>
+    <script
+        src="{% static 'assets/libs/cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'assets/libs/cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'assets/libs/cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'assets/libs/cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{% static 'assets/libs/dropzone/dropzone-min.js' %}"></script>
+    {% comment %} <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>  {% endcomment %}
+
+    <!-- App js -->
+    <script src="{% static 'assets/js/app.js' %}"></script>
+    <script src="{% static 'assets/js/datatable.js' %}"></script>
+    <script src="{% static 'js/dev.js' %}"></script>
+    
+    <script nonce="{{ nonce }}">
+        $(document).ready(function () {
+            $('.loader-button').on('click', function () {
+                console.log('Button clicked');
+                
+                // Hide preloader initially
+                $('#custom-preloader').hide();
+
+                // Set a 2-second delay before showing the preloader
+                setTimeout(function () {
+                    $('#custom-preloader').show();
+                }, 2000); // 2000 milliseconds = 2 seconds
+            });
+
+            $(window).on('load', function () {
+                $('#custom-preloader').hide();
+            });
+
+        });
+      </script>
+      <script> 
+        // function googleTranslateElementInit() {
+        //     new google.translate.TranslateElement({
+        //         pageLanguage: 'en',
+        //         includedLanguages: 'en,lb,de,fr,pt' // Set the languages to include here
+        //     }, 'my_google_translate_element');
+
+        //     var $googleDiv = $("#my_google_translate_element .skiptranslate");
+        //     var $googleDivChild = $("#my_google_translate_element .skiptranslate div");
+        //     $googleDivChild.next().remove();
+
+        //     $googleDiv.contents().filter(function(){
+        //         return this.nodeType === 3 && $.trim(this.nodeValue) !== '';
+        //     }).remove();
+        //     $(".goog-te-combo").addClass("form-control");
+        // }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#user_access_from_value").change(function (){
+                $("#user-select-form").submit()
+            })
+        })
+    </script>
+    <script>
+        $('#YoutubeVideoPopup').on('shown.bs.modal', function () {
+            var iframe = $(this).find('iframe');
+            var src = iframe.attr('src');
+            iframe.attr('src', src + '?autoplay=1');
+        });
+    
+        $('#YoutubeVideoPopup').on('hidden.bs.modal', function () {
+            var iframe = $(this).find('iframe');
+            var src = iframe.attr('src').split('?')[0];
+            iframe.attr('src', src);
+        });
+        $(function() {
+            $('.modal').on('shown.bs.modal', function() {
+              $('.modal-backdrop').addClass('show');
+            })
+          
+            $('.modal').on('hidden.bs.modal', function() {
+              $('.modal-backdrop').removeClass('show');
+            })
+          });
+    </script>
+    {% block extra_js %}
+    {% endblock extra_js %}
+</body>
+
+</html>

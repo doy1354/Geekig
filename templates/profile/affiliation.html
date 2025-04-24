@@ -1,0 +1,84 @@
+{% extends 'profile/profile_base.html' %}
+{% load static widget_tweaks %}
+{% block title_text %}Profile{% endblock %}
+
+{% block profile %}
+<div class="row mt-5">
+    <div class="col-lg-5">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between gap-3">
+            <h4 class="mb-sm-0" data-i18n="FUTURE REFERRALS DIRECTLY">Invite your future referrals directly by email</h4>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+                <input type="email" class="form-control" name="recipient_email" placeholder="Recipient's email" aria-label="Recipient's email" aria-describedby="button-addon2">
+                <button class="btn btn-dark" type="submit" id="button-addon2">Send Invite</button>
+            </div>
+        </form>      
+    </div>
+</div>
+<div>
+    <div class="page-title-box d-sm-flex align-items-center justify-content-between gap-3">
+        <h4 class="mb-sm-0" data-i18n="Several People its cheaper">With Several People its cheaper </h4>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="several-card">
+                <div class="several-inner">
+                    <ul>
+                        <li>
+                            <div class="people-images">
+                                <div class="people-img ">
+                                    <img src="{% static 'assets/images/pepole-1.png' %}" alt="people">
+                                </div>
+                                <div class="people-img ">
+                                    <img src="{% static 'assets/images/pepole-1.png' %}" alt="people">
+                                </div>
+                                <div class="people-img check-people">
+                                    <img src="{% static 'assets/images/pepole-1.png' %}" alt="people">
+                                    <i class="ri-checkbox-circle-fill"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <p>300 offered if you sponsor 1 person</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="people-images">
+                                <div class="people-img ">
+                                    <img src="{% static 'assets/images/pepole-1.png' %}" alt="people">
+                                </div>
+                                <div class="people-img ">
+                                    <img src="{% static 'assets/images/pepole-1.png' %}" alt="people">
+                                </div>
+                                <div class="people-img check-people">
+                                    <img src="{% static 'assets/images/pepole-1.png' %}" alt="people">
+                                </div>
+                            </div>
+                            <div>
+                                <p>300 offered if you sponsor 1 person</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="people-images">
+                                <div class="people-img ">
+                                    <img src="{% static 'assets/images/pepole-1.png' %}" alt="people">
+                                </div>
+                                <div class="people-img ">
+                                    <img src="{% static 'assets/images/pepole-1.png' %}" alt="people">
+                                </div>
+                                <div class="people-img check-people">
+                                    <img src="{% static 'assets/images/pepole-1.png' %}" alt="people">
+                                </div>
+                            </div>
+                            <div>
+                                <p>300 offered if you sponsor 1 person</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock profile %}

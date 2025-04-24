@@ -1,0 +1,82 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}
+<title>{% block title_text %}Geekig{% endblock title_text %} || Accounting</title>
+{% endblock title %}
+{% block content %}
+<section class="auth-page-wrapper py-5 position-relative d-flex align-items-center justify-content-center min-vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card mb-0 border-0 shadow-none mb-0">
+                    <div class="card-body text-center p-sm-5 m-lg-4">
+                        <div class="mt-2">
+                            <h5 class="fs-3xl">Verification</h5>
+                        </div>
+                        <div class="p-2 mt-5">
+                            <h2 class="text-center"><b>Congratulations on your registration! 👍</b></h2>
+                            <p >Please complete your email verification and check your inbox as well as your spam folder for the verification email. 
+                            </p>
+                            <p class="my-4">
+                                Our intuitive interface will guide you through each step for a quick and efficient
+                                setup. Ready to transform your financial management?</p>
+                            </p>
+
+                            <button id="resentBtn" class="btn btn-bg btn-dark">Resent (59) {{ user }} </button>
+                        </div>
+                    </div><!-- end card body -->
+                </div>
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+    <!--end container-->
+</section>
+{% endblock %}
+{% block extra_js %}
+
+<script>
+    $(document).ready(function() {
+        // #resentBtn button automatic click
+
+      $("#resentBtn").click(function(event) {
+        event.preventDefault(); // Prevent default form submission
+    
+        var countdown = 60; // Set countdown to 60 seconds
+    
+        $(this).prop("disabled", true); // Disable the button after click
+        $(this).text("Resent (" + countdown + ")"); // Update button text with initial countdown
+    
+        var timer = setInterval(function() {
+          countdown--; // Decrement countdown
+          $("#resentBtn").text("Resent (" + countdown + ")"); // Update button text with remaining time
+    
+          if (countdown === 0) {
+            clearInterval(timer); // Clear timer when countdown reaches 0
+            $("#resentBtn").prop("disabled", false); // Enable the button after countdown
+            $("#resentBtn").text("Resent"); // Reset button text to original
+          }
+        }, 1000); // Update timer every 1 second
+      });
+    });
+    </script>
+<!-- <script>
+$(document).ready(function() {
+    $("#resentBtn").ready(function() {
+        setTimeout(function() {
+            $("#resentBtn").prop("disabled", false); // Enable the button after 60 seconds
+        }, 10 * 1000); // 60 seconds in milliseconds
+    });
+
+    $("#resentBtn").click(function() {
+        $(this).prop("disabled", true); // Disable the button after click
+
+        setTimeout(function() {
+            $("#resentBtn").prop("disabled", false); // Enable the button after 60 seconds
+        }, 10 * 1000); // 60 seconds in milliseconds
+    });
+});
+</script> -->
+
+{% endblock extra_js %}

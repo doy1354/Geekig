@@ -1,0 +1,31 @@
+{% load static %}
+<div class="app-menu navbar-menu">
+    <!-- LOGO -->
+    <div class="navbar-brand-box">
+        <a href="{% url 'index' %}" class="logo logo-dark">
+            Logo
+        </a>
+        <button type="button" class="btn btn-sm p-0 fs-3xl header-item float-end btn-vertical-sm-hover"
+            id="vertical-hover">
+            <i class="ri-record-circle-line"></i>
+        </button>
+    </div>
+
+    <div id="scrollbar">
+        <div class="container-fluid">
+            <div id="two-column-menu"></div>
+        </div>
+        
+        <!-- Sidebar -->
+    </div>
+    <div class="select-language">
+        <select id="languageSelector" class="form-control" name="language">
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="pt">Português</option>
+            <option value="lu">Lëtzebuergesch</option>
+        </select>
+    </div>
+    <div class="sidebar-background"></div>
+</div>

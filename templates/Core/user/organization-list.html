@@ -1,0 +1,51 @@
+{% extends 'Core/user/user-base.html' %}
+
+{% block user %}
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12 mt-3">
+                <h5 class="mb-0">All Organization</h5>
+                <table class="table">
+                    <tr>
+                        <th>SL</th>
+                        <th>Organization</th>
+                        <th>Allow User</th>
+                        <th>Active User</th>
+                    </tr>
+                    {% for object in object_list %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'core:organization_user' object.pk %}">{{ forloop.counter }}</a>
+                        </td>
+                        <td>
+                            <a href="{% url 'core:organization_user' object.pk %}">{{ object.name }}</a>
+                        </td>
+                        <td>{{ object.max_size }}</td>
+                        <td>{{ object.member.count }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+</div>
+{% endblock user %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function () {
+        $("#all_user").change(function (){
+            let id = $(this).val();
+            $.ajax({
+                url: "{% url 'core:remove_user_permission' %}",
+                data: {
+                    'value': id,
+                },
+                success: function (data) {
+                    console.log(data);
+                    $("#remove_user").html(data);
+                }
+            })
+        })
+    })
+</script>
+{% endblock extra_js %}

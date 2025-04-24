@@ -1,0 +1,80 @@
+{% extends 'Core/user/user-base.html' %}
+
+{% block user %}
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12 mt-3">
+                <h5 class="mb-0">{{ object }} All User</h5>
+                <table class="table">
+                    <tr>
+                        <th>SL</th>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for object in object_list %}
+                    <tr>
+                        <td>
+                            {{ forloop.counter }}
+                        </td>
+                        <td>
+                            {{ object.user }}
+                        </td>
+                        <td>{{ object.user.name }}</td>
+                        <td>
+                            {% if object.role.is_main_role is False %}
+                            <button class="btn p-0" title="Delete" style="font-size: 20px;" data-bs-toggle="modal" data-bs-target="#delete_modal_{{ object.pk }}">
+                            <i class="ri-delete-bin-fill"></i>
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="delete_modal_{{ object.pk }}" tabindex="-1" aria-labelledby="delete_modal_{{ object.pk }}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="delete_modal_{{ object.pk }}">Delete Member </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete this Member ?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+                                    <a href="{% url 'organization:organization_member_delete' object.pk %}" type="button" class="btn btn-dark">Yes Delete</a>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            {% else %}
+                            <button class="btn p-0" title="Delete" style="font-size: 20px; border: none;" disabled>
+                            <i class="ri-delete-bin-fill"></i>
+                            </button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+</div>
+{% endblock user %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function () {
+        $("#all_user").change(function (){
+            let id = $(this).val();
+            $.ajax({
+                url: "{% url 'core:remove_user_permission' %}",
+                data: {
+                    'value': id,
+                },
+                success: function (data) {
+                    console.log(data);
+                    $("#remove_user").html(data);
+                }
+            })
+        })
+    })
+</script>
+{% endblock extra_js %}

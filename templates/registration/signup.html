@@ -1,0 +1,233 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load static socialaccount widget_tweaks %}
+{% block title %}
+    <title>{% block title_text %}Geekig{% endblock title_text %} || Sign Up</title>
+{% endblock title %}
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+<style>
+    .g-recaptcha {
+    height: 78px;
+    min-height: 78px;
+    margin-bottom: 20px;
+  }
+  .errorClass{
+    border: 1px solid red;
+  }
+  .validClass{
+    border: 1px solid green;
+  }
+  #password-error{
+    position: absolute;
+    bottom: -20px;
+    color: red;
+  }
+  #password2-error{
+    position: absolute;
+    bottom: -20px;
+    color: red;
+  }
+  select:focus-visible{
+    border: 0px solid #000 !important;
+  }
+</style>
+{% endblock extra_css %}
+{% block content %}
+<section class="auth-page-wrapper py-5 position-relative d-flex align-items-center justify-content-center min-vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                
+                <div class="card mb-0 border-0 shadow-none mb-0 p-2">
+                    <div class="lan">
+                        <select id="languageSelector" class="mb-3" style="border: navajowhite;
+                    background: transparent;
+                    float: right;
+                    font-size: 16px;">
+                        <option value="en">English</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                        <option value="pt">Português</option>
+                        <option value="lu">Lëtzebuergesch</option>
+                    </select>
+                    </div>
+                    <div class="card-body">
+                        
+                        <div class="text-center mt-2">
+                            <h5 class="fs-3xl">Sign Up</h5>
+                        </div>
+                        <div class="p-2 mt-5">
+                            <form method="POST" class="needs-validation" novalidate accept-charset="UTF-8" id="formSignup">
+                                {% csrf_token %}
+                                <div class="mb-5 auth-buttons">
+                                    
+                                    <a href="{% provider_login_url 'google' %}"  class="btn green-border  w-100" type="submit"><img
+                                            src="{% static 'assets/images/google.png' %}" alt="google" class="me-2">
+                                        Continue with
+                                        Google</a>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label" data-i18n="emails">Email</label>
+                                            {% render_field form.email class="form-control" id="email" placeholder="Email" %}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="password" class="form-label" data-i18n="password">Password</label>
+                                        <div class="input-group mb-3">
+                                            {% render_field form.password1 class="form-control password1" id="password" placeholder="Password" aria-describedby="basic-addon2" %}
+                                            <span class="input-group-text cursor-pointer password-eye" id="basic-addon2" ><span class="mdi mdi-eye" style="font-size: 16px;"></span></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="password" class="form-label" data-i18n="password">Password</label>
+                                        <div class="input-group mb-3">
+                                            {% render_field form.password2 class="form-control password2" id="password" placeholder="Password" aria-describedby="basic-addon2" %}
+                                            <span class="input-group-text cursor-pointer password-eye" id="basic-addon2" ><span class="mdi mdi-eye" style="font-size: 16px;"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-maximum border-bottom pb-4" data-i18n="pass_req">The password must be minimum 8 characters,
+                                    include at least one capital, one lowercase, one number and one special character.
+                                </p>
+
+                                <div class="mb-4">
+                                    <div class="form-check d-flex">
+                                        {{ form.is_accept|add_class:"form-check-input" }}
+                                        <label class="form-check-label mb-0 fs-xs text-muted " for="invalidCheck2">
+                                            <span data-i18n="privacy_policy_1">By Creating you agree with</span> 
+                                            <a href="" class="text-dark text-decoration-underline fst-normal fw-medium">
+                                                <span data-i18n="privacy_policy_2">Privacy Policy</span>
+                                            </a> 
+                                            <span data-i18n="privacy_policy_3">and</span> 
+                                            <a href="#" class="text-dark text-decoration-underline fst-normal fw-medium"><span data-i18n="privacy_policy_4">Terms</span></a>
+                                            <span data-i18n="privacy_policy_5">and Conditions.</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 auth-buttons">
+                                    <button class="btn btn-dark w-100" type="submit" data-i18n="signup">Sign Up</button>
+                                    
+                                </div>
+
+
+                            </form>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <p class="mb-0" data-i18n="already_have">Already have an account ? </p>
+                                <a href="{% url 'login' %}" class="fw-semibold text-primary text-decoration-underline" data-i18n="signin"> Signin </a> 
+                        </div>
+                    </div><!-- end card body -->
+                </div><!-- end card -->
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+    <!--end container-->
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/passwd_show.js' %}"></script>
+<script src="{% static 'js/btn_loader.js' %}"></script>
+<script src="{% static 'assets/js/intlTelInputa.min.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="{% static 'js/translation.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        $('#formSignup').validate({
+            rules: {
+                password1: {
+                    required: true,
+                    minlength: 8,
+                    strongPassword: true
+                },
+                password2: {
+                    required: true,
+                    equalTo: '#password'
+                }
+            },
+            messages: {
+                password1: {
+                    required: "Please enter a password",
+                    minlength: "Password minimum 8 characters"
+                },
+                password2: {
+                    required: "Please confirm your password",
+                    equalTo: "Passwords do not match"
+                }
+            },
+            errorPlacement: function(error, element) {
+                // Display error message below the input element
+                error.insertAfter(element);
+            },
+            highlight: function(element, errorClass, validClass) {
+                // Highlight input with red border on validation error
+                $(element).addClass(errorClass).removeClass(validClass);
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                // Remove red border when input is valid
+                $(element).removeClass(errorClass).addClass(validClass);
+            }
+        });
+
+        // Custom method for password strength check
+        $.validator.addMethod("strongPassword", function(value, element) {
+            return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/.test(value);
+        }, "Not Valid: (Example: Test123#)");
+
+        
+    });
+</script>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        function countrySelect(){
+            // commerce number
+            var phone = document.querySelector("#phone");
+            window.intlTelInput(phone, {
+            initialCountry: "lu",
+            separateDialCode: true,
+            preferredCountries: ["fr", "lu", "be", "de"]
+            });
+        }
+        countrySelect();
+
+        $(".password-eye").click(function () {
+            var password = $("#password");
+            var confirmPassword = $("#password2");
+            var eyeIcon = $(".password-eye").find("span");
+
+            // Toggle password visibility
+            if (password.attr("type") === "password") {
+                password.attr("type", "text");
+                eyeIcon.removeClass("mdi-eye").addClass("mdi-eye-off"); // Change icon to eye-off
+            } else {
+                password.attr("type", "password");
+                eyeIcon.removeClass("mdi-eye-off").addClass("mdi-eye"); // Change icon to eye
+            }
+            if (confirmPassword.attr("type") === "password") {
+                confirmPassword.attr("type", "text");
+                eyeIcon.removeClass("mdi-eye").addClass("mdi-eye-off"); // Change icon to eye-off
+            } else {
+                confirmPassword.attr("type", "password");
+                eyeIcon.removeClass("mdi-eye-off").addClass("mdi-eye"); // Change icon to eye
+            }
+        });
+
+
+
+
+    });
+</script>
+
+
+{% endblock extra_js %}
