@@ -1,0 +1,266 @@
+{% extends 'base/dashboard_base.html' %}
+
+{% load static %}
+{% block title %}Parsing Results{% endblock %}
+{% block extra_css %}
+<style>
+    .card{
+        border: 0px solid #e0e0e0;
+    }
+    .card-header{
+        border: none !important;
+    }
+    .nav-tabs .nav-link {
+        border: 1px solid #dee2e6;
+    }
+    .nav-tabs .nav-link {
+        color: #484848;
+    }
+    .select-dropdown{
+        width: 50%;
+        display: inline-block;
+    }
+    .gear{
+        font-size: 1.5rem;
+        color: #3a3a3a;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mt-5">
+            <div class="card-header bg-white text-center">
+                <h4 class="card-title my-2">IG Exporter</h4>
+                <p class="card-text">Extract followers and following from any Instagram profile!</p>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="option-tab" data-bs-toggle="tab" data-bs-target="#option" type="button" role="tab" aria-controls="home" aria-selected="true">
+                                    <i class="fa-solid fa-house"></i> Options
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="preview-tab" data-bs-toggle="tab" data-bs-target="#preview" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                                    <i class="fa-solid fa-eye"></i> Preview
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab" aria-controls="contact" aria-selected="false">
+                                    <i class="fa-solid fa-clock-rotate-left"></i> History
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="help-tab" data-bs-toggle="tab" data-bs-target="#help" type="button" role="tab" aria-controls="contact" aria-selected="false">
+                                    <i class="fa-solid fa-question"></i> Help
+                                </button>
+                            </li>
+                        </ul>
+                        <hr>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="option" role="tabpanel" aria-labelledby="option-tab">
+                                <form action="" method="post" class="mt-4">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="target" class="form-label">IG User or URL:</label>
+                                        <input type="text" class="form-control" id="target" name="target" placeholder="Instagram user name like @cristiano or a full URL">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="customRange1" class="form-label">Delay:</label>
+                                        <input type="range" class="form-range" id="customRange1" min="5" max="60" oninput="syncRangeAndNumber(this.value)">
+                                        <input type="number" id="rangeValue" class="form-control ms-2 d-inline-block" style="width: 80px;" min="5" max="60" value="5" oninput="syncNumberAndRange(this.value)">
+                                        <label for="rangeValue">seconds</label> <br>
+                                        <small><i>Instagram prevents scraping. Set larger timeout if you have issues. Timeout is set in seconds.</i></small>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="amount" class="form-label">Extracting type:</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="scrapeType" id="followers" checked>
+                                            <label class="form-check-label" for="followers">Followers</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="scrapeType" id="following">
+                                            <label class="form-check-label" for="following">Following</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="scrapeType" id="similar">
+                                            <label class="form-check-label" for="similar">Similar Profile</label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch toggle-switch">
+                                            <input class="form-check-input" type="checkbox" id="Details">
+                                            <label for="Details">Detailed</label>
+                                        </div>
+                                        <small><i>profile includes bio, followers count, Email, address, etc. It would take a lot more time.</i></small>
+                                    </div>
+                                    <div class="mb-3">
+                                        <button type="button" class="btn btn-primary"> Start New Parsing </button>
+                                        <button type="button" class="btn btn-secondary"> Pause Parsing </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="preview" role="tabpanel" aria-labelledby="preview-tab">
+                                <table class="table mt-2">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Username</th>
+                                            <th scope="col">Full Name</th>
+                                            <th scope="col">Followed by you</th>
+                                            <th scope="col">is verified</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                            <td>True</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td>Jacob</td>
+                                            <td>Thornton</td>
+                                            <td>@fat</td>
+                                            <td>True</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td colspan="2">Larry the Bird</td>
+                                            <td>@twitter</td>
+                                            <td>True</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+                                <table class="table mt-2">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Index</th>
+                                            <th scope="col">Task</th>
+                                            <th scope="col">Type</th>
+                                            <th scope="col">Extracted</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                            <td>True</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td>Jacob</td>
+                                            <td>Thornton</td>
+                                            <td>@fat</td>
+                                            <td>True</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td colspan="2">Larry the Bird</td>
+                                            <td>@twitter</td>
+                                            <td>True</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="help" role="tabpanel" aria-labelledby="help-tab">
+                                <h5 class="mt-2">How to use?</h5>
+                                <p>1. Enter the Instagram username or URL you want to scrape.</p>
+                                <p>2. Choose the type of data you want to extract (Followers, Following, Similar Profile).</p>
+                                <p>3. Set the delay between requests to avoid being blocked by Instagram.</p>
+                                <p>4. Click on "Start New Parsing" to begin the extraction process.</p>
+                                <p>5. You can pause the parsing at any time.</p>
+                                <p>6. Check the "Preview" tab to see the extracted data.</p>
+                                <p>7. Check the "History" tab to see your previous tasks.</p>
+                                <p>8. If you have any issues, refer to the help section or contact support.</p>
+                                <p>9. For detailed data, check the "Detailed" option.</p>
+                                <p>10. Enjoy using IG Exporter!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3 text-center">
+                            <label for="gear" class="form-label me-2">
+                                <i class="fa-solid fa-language gear"></i>
+                            </label>
+                            <select class="form-select select-dropdown" aria-label="Default select example">
+                                <option selected>Open this select menu</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <h3>Your Account</h3>
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="fa-brands fa-google"></i> Connect with Google
+                            </button>
+                            <button class="btn btn-sm btn-secondary">
+                                UPGRADE
+                            </button>
+                        </div>
+                        <div class="my-3">
+                            <h3>Progress</h3>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Status</th>
+                                        <th scope="col" class="text-end">Stopped</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Errors</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Total profiles</th>
+                                        <td class="text-end">0</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Found profiles</th>
+                                        <td class="text-end">0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-secondary">Save to CSV</button>
+                                <button type="button" class="btn btn-secondary">Save to Excel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function syncRangeAndNumber(value) {
+        document.getElementById('rangeValue').value = value;
+    }
+
+    function syncNumberAndRange(value) {
+        const rangeInput = document.getElementById('customRange1');
+        if (value >= rangeInput.min && value <= rangeInput.max) {
+            rangeInput.value = value;
+        }
+    }
+</script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}
