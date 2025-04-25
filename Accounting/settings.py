@@ -332,11 +332,10 @@ except ImportError:  # use default if not defined in local_settings
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
 EMAIL_HOST  = "smtp.sendgrid.net"
 EMAIL_HOST_USER = "apikey"
-EMAIL_HOST_PASSWORD = "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"
-EMAIL_PORT = 465
+EMAIL_HOST_PASSWORD= GET_EMAIL_HOST_PASSWORD
+EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = "doyen118.business@gmail.com"
 
 # Celery ----------------------------------------------------------------------
