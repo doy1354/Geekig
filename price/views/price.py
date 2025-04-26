@@ -11,6 +11,17 @@ class ChoicePlan(LoginRequiredMixin, View):
     template_name = 'price/choice_plan.html'
 
     def get(self, request, *args, **kwargs):
-        pass
+        """GET method for the view"""
+        # Get the price plans from the database
+        price_plans_in_china = PricePlan.objects.filter(
+            is_active=True, inside_china=True
+        ).order_by('price')
+        price_plans_outside_china = PricePlan.objects.filter(
+            is_active=True, inside_china=False
+        ).order_by('price')
+        context = {
+            'price_plans_in_china': price_plans_in_china,
+            'price_plans_outside_china': price_plans_outside_china,
+        }
 
-        return render(request, self.template_name)
+        return render(request, self.template_name, context=context)

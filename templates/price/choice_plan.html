@@ -151,36 +151,20 @@
           <!-- USD Tab -->
           <div class="tab-pane fade show active" id="usd" role="tabpanel">
             <div class="row">
-              <!-- Basic Plan -->
-              <div class="col-md-4 mb-4">
-                <div class="pricing-card p-4 text-center h-100" onclick="selectPlan('usd_basic')" data-plan="usd_basic">
-                  <div class="credits-amount mb-3">5,000 Credits</div>
-                  <div class="price mb-3">$6.99</div>
-                  <div class="discount-badge mb-3">38% OFF</div>
-                  <button class="btn btn-outline-primary w-100">Select</button>
+                {% for obj_outside_china in price_plans_outside_china %}
+                <div class="col-md-4 mb-4">
+                    <div class="pricing-card p-4 text-center h-100" onclick="selectPlan('{{ obj_outside_china.pk }}')" data-plan="{{ obj_outside_china.pk }}">
+                        {% if obj_outside_china.is_popular %}
+                        <div class="popular-badge">Most Popular</div>
+                        {% endif %}
+                        <div class="credits-amount mb-3">{{ obj_outside_china.title }}</div>
+                        <div class="price mb-3">${{ obj_outside_china.price }}</div>
+                        <div class="discount-badge mb-3">{{ obj_outside_china.discount }}% OFF</div>
+                        <button class="btn btn-outline-primary w-100">Select</button>
+                    </div>
                 </div>
-              </div>
+                {% endfor %}
               
-              <!-- Popular Plan -->
-              <div class="col-md-4 mb-4">
-                <div class="pricing-card popular p-4 text-center h-100" onclick="selectPlan('usd_popular')" data-plan="usd_popular">
-                  <div class="popular-badge">Most Popular</div>
-                  <div class="credits-amount mb-3">100,000 Credits</div>
-                  <div class="price mb-3">$59.99</div>
-                  <div class="discount-badge mb-3">57% OFF</div>
-                  <button class="btn btn-primary w-100">Select</button>
-                </div>
-              </div>
-              
-              <!-- Premium Plan -->
-              <div class="col-md-4 mb-4">
-                <div class="pricing-card p-4 text-center h-100" onclick="selectPlan('usd_premium')" data-plan="usd_premium">
-                  <div class="credits-amount mb-3">200,000 Credits</div>
-                  <div class="price mb-3">$99.99</div>
-                  <div class="discount-badge mb-3">66% OFF</div>
-                  <button class="btn btn-outline-primary w-100">Select</button>
-                </div>
-              </div>
               <div class="col-md-12">
                 <div class="payment-section text-center mt-5">
                     <h4 class="mb-4">Choose payment method</h4>
@@ -205,35 +189,20 @@
           <!-- CNY Tab -->
           <div class="tab-pane fade" id="cny" role="tabpanel">
             <div class="row">
-              <!-- Basic Plan -->
-              <div class="col-md-4 mb-4">
-                <div class="pricing-card p-4 text-center h-100" onclick="selectPlan('cny_basic')" data-plan="cny_basic">
-                  <div class="credits-amount mb-3">20,000 Credits</div>
-                  <div class="price mb-3">¥140</div>
-                  <button class="btn btn-outline-primary w-100">Select</button>
+                {% for obj_plans_in_china in price_plans_in_china %}
+                <div class="col-md-4 mb-4">
+                    <div class="pricing-card p-4 text-center h-100" onclick="selectPlan('{{ obj_plans_in_china.pk }}')" data-plan="{{ obj_plans_in_china.pk }}">
+                        {% if obj_plans_in_china.is_popular %}
+                        <div class="popular-badge">Most Popular</div>
+                        {% endif %}
+                        <div class="credits-amount mb-3">{{ obj_plans_in_china.title }}</div>
+                        <div class="price mb-3">¥{{ obj_plans_in_china.price }}</div>
+                        <div class="discount-badge mb-3">{{ obj_plans_in_china.discount }}% OFF</div>
+                        <button class="btn btn-outline-primary w-100">Select</button>
+                    </div>
                 </div>
-              </div>
+                {% endfor %}
               
-              <!-- Popular Plan -->
-              <div class="col-md-4 mb-4">
-                <div class="pricing-card popular p-4 text-center h-100" onclick="selectPlan('cny_popular')" data-plan="cny_popular">
-                  <div class="popular-badge">Most Popular</div>
-                  <div class="credits-amount mb-3">100,000 Credits</div>
-                  <div class="price mb-3">¥419</div>
-                  <div class="discount-badge mb-3">57% OFF</div>
-                  <button class="btn btn-primary w-100">Select</button>
-                </div>
-              </div>
-              
-              <!-- Premium Plan -->
-              <div class="col-md-4 mb-4">
-                <div class="pricing-card p-4 text-center h-100" onclick="selectPlan('cny_premium')" data-plan="cny_premium">
-                  <div class="credits-amount mb-3">200,000 Credits</div>
-                  <div class="price mb-3">¥699</div>
-                  <div class="discount-badge mb-3">66% OFF</div>
-                  <button class="btn btn-outline-primary w-100">Select</button>
-                </div>
-              </div>
               <div class="col-md-12">
                 <div class="payment-section text-center mt-5">
                     <h4 class="mb-4">Choose payment method</h4>

@@ -4,9 +4,9 @@ from django.db import models
 from core.models import User
 
 
-MEETING_TYPE = (
-    (1, "Without Payment"),
-    (2, "With Payment"),
+REGION_CHOICES = (
+    ('inside_china', 'Inside China'),
+    ('outside_china', 'Outside China'),
 )
 
 
@@ -14,15 +14,18 @@ class PricePlan(models.Model):
     title = models.CharField(max_length=150)
     sub_title = models.CharField(max_length=255, null=True, blank=True)
     description = models.CharField(max_length=1500, null=True, blank=True)
-    price = models.IntegerField()
-    api_keys = models.CharField(max_length=255, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    api_keys = models.CharField(max_length=255, null=True, blank=True)
     credits = models.PositiveIntegerField(default=0)
+    is_discount = models.BooleanField(default=False)
     discount = models.IntegerField(default=0)
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name='Created At')
     updated_at = models.DateTimeField(
         auto_now=True, verbose_name='Updated At')
     is_active = models.BooleanField(default=True)
+    inside_china = models.BooleanField(default=True)
+    is_popular = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = 'Price Plans'
@@ -55,10 +58,6 @@ class TransactionHistory(models.Model):
 
 
 class RegionPaymentMethod(models.Model):
-    REGION_CHOICES = (
-        ('inside_china', 'Inside China'),
-        ('outside_china', 'Outside China'),
-    )
 
     PAYMENT_METHODS_INSIDE_CHINA = (
         ('ali_pay', 'Ali Pay'),
