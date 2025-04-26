@@ -143,7 +143,7 @@ class CustomPasswordResetView(PasswordResetView):
 
 class IndexView(TemplateView):
     """Index view"""
-    template_name = 'index.html'
+    template_name = 'index1.html'
 
     def get(self, request, *args, **kwargs):
         # redirect authenticated users

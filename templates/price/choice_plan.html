@@ -1,0 +1,293 @@
+{% extends 'base/dashboard_base.html' %}
+
+{% block title %}Buy Credits - IGExporter Clone{% endblock %}
+
+<!-- extra css -->
+{% block extra_css %}
+<style>
+    .credits-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+    }
+    
+    .nav-tabs {
+      border-bottom: 2px solid #dee2e6;
+    }
+    
+    .nav-tabs .nav-link {
+      border: none;
+      color: #6c757d;
+      font-weight: 600;
+      padding: 12px 24px;
+    }
+    
+    .nav-tabs .nav-link.active {
+      color: #0d6efd;
+      background: transparent;
+      border-bottom: 3px solid #0d6efd;
+    }
+    
+    .pricing-card {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .pricing-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
+    
+    .pricing-card.selected {
+      border: 2px solid #0d6efd;
+      background-color: #f8faff;
+    }
+    
+    .pricing-card.selected::after {
+      content: "✓ Selected";
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #0d6efd;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    
+    .popular-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0d6efd;
+      color: white;
+      padding: 4px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .credits-amount {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #333;
+    }
+    
+    .price {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #0d6efd;
+    }
+    
+    .discount-badge {
+      display: inline-block;
+      background: #f8f9fa;
+      color: #dc3545;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    
+    .btn-payment {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 8px 20px;
+    }
+    
+    .btn-payment:hover {
+      background: #f8f9fa;
+    }
+    
+    .btn-vip {
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      color: white;
+      border: none;
+      font-weight: 600;
+    }
+    
+    @media (max-width: 768px) {
+      .credits-card {
+        padding: 2rem !important;
+      }
+      
+      .btn-payment {
+        width: 100%;
+      }
+    }
+</style>
+{% endblock %}  
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="credits-card p-4 p-md-5 mb-5">
+        <h1 class="text-center mb-5">Buy Credits</h1>
+        
+        <!-- Hidden form field to store selected plan -->
+        <input type="hidden" id="selectedPlan" name="selected_plan" value="">
+        
+        <!-- Currency Tabs -->
+        <ul class="nav nav-tabs mb-4 justify-content-center" id="currencyTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="usd-tab" data-bs-toggle="tab" data-bs-target="#usd" type="button" role="tab">
+              U.S. Dollar
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="cny-tab" data-bs-toggle="tab" data-bs-target="#cny" type="button" role="tab">
+              Chinese Yuan
+            </button>
+          </li>
+        </ul>
+
+        <div class="tab-content" id="currencyTabsContent">
+          <!-- USD Tab -->
+          <div class="tab-pane fade show active" id="usd" role="tabpanel">
+            <div class="row">
+                {% for obj_outside_china in price_plans_outside_china %}
+                <div class="col-md-4 mb-4">
+                    <div class="pricing-card p-4 text-center h-100" onclick="selectPlan('{{ obj_outside_china.pk }}')" data-plan="{{ obj_outside_china.pk }}">
+                        {% if obj_outside_china.is_popular %}
+                        <div class="popular-badge">Most Popular</div>
+                        {% endif %}
+                        <div class="credits-amount mb-3">{{ obj_outside_china.title }}</div>
+                        <div class="price mb-3">${{ obj_outside_china.price }}</div>
+                        <div class="discount-badge mb-3">{{ obj_outside_china.discount }}% OFF</div>
+                        <button class="btn btn-outline-primary w-100">Select</button>
+                    </div>
+                </div>
+                {% endfor %}
+              
+              <div class="col-md-12">
+                <div class="payment-section text-center mt-5">
+                    <h4 class="mb-4">Choose payment method</h4>
+                    <div class="d-flex justify-content-center flex-wrap gap-3 mb-4">
+                    <button class="btn btn-payment">
+                        <i class="fab fa-google-pay me-2"></i> Google Pay
+                    </button>
+                    <button class="btn btn-payment">
+                        <i class="fab fa-apple-pay me-2"></i> Apple Pay
+                    </button>
+                    <!-- stripe -->
+                    <button class="btn btn-payment">
+                        <i class="fab fa-cc-stripe me-2"></i> Stripe
+                    </button>
+                    </div>
+                    <p class="text-muted">One-time payment, no monthly subscription</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CNY Tab -->
+          <div class="tab-pane fade" id="cny" role="tabpanel">
+            <div class="row">
+                {% for obj_plans_in_china in price_plans_in_china %}
+                <div class="col-md-4 mb-4">
+                    <div class="pricing-card p-4 text-center h-100" onclick="selectPlan('{{ obj_plans_in_china.pk }}')" data-plan="{{ obj_plans_in_china.pk }}">
+                        {% if obj_plans_in_china.is_popular %}
+                        <div class="popular-badge">Most Popular</div>
+                        {% endif %}
+                        <div class="credits-amount mb-3">{{ obj_plans_in_china.title }}</div>
+                        <div class="price mb-3">¥{{ obj_plans_in_china.price }}</div>
+                        <div class="discount-badge mb-3">{{ obj_plans_in_china.discount }}% OFF</div>
+                        <button class="btn btn-outline-primary w-100">Select</button>
+                    </div>
+                </div>
+                {% endfor %}
+              
+              <div class="col-md-12">
+                <div class="payment-section text-center mt-5">
+                    <h4 class="mb-4">Choose payment method</h4>
+                    <div class="d-flex justify-content-center flex-wrap gap-3 mb-4">
+                    <button class="btn btn-payment">
+                        <i class="fas fa-credit-card me-2"></i> USDT
+                    </button>
+                    <button class="btn btn-payment">
+                        <i class="fab fa-weixin me-2"></i> WeChat Pay
+                    </button>
+                    <button class="btn btn-payment">
+                        <i class="fas fa-wallet me-2"></i> Alipay
+                    </button>
+                    </div>
+                    <p class="text-muted">One-time payment, no monthly subscription</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIP Notice -->
+        <div class="text-center mt-5">
+          <h4 class="mb-3">Buy Now (one-time payment)</h4>
+          <p class="text-muted mb-4">Buy any credits to become VIP permanently</p>
+          <button class="btn btn-vip btn-lg px-5" onclick="processPayment()">
+            Purchase Now <i class="fas fa-arrow-right ms-2"></i>
+          </button>
+        </div>
+
+        <!-- FAQ -->
+        <div class="faq-section mt-5 pt-4 border-top">
+          <h4 class="text-center mb-4">What is a Credit?</h4>
+          <p class="text-center text-muted">
+            Credits are the virtual currency used in our system. 1 Credit = 1 action in our platform.
+            Purchase credits to unlock premium features and services.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Include Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script>
+  // Function to handle plan selection
+  function selectPlan(planId) {
+    // Remove selected class from all cards
+    document.querySelectorAll('.pricing-card').forEach(card => {
+      card.classList.remove('selected');
+    });
+    
+    // Add selected class to clicked card
+    event.currentTarget.classList.add('selected');
+    
+    // Store selected plan in hidden field
+    document.getElementById('selectedPlan').value = planId;
+    
+    // You can also store it in a variable for later use
+    const selectedPlan = planId;
+    console.log('Selected plan:', selectedPlan);
+  }
+  
+  // Function to process payment (will use the selected plan)
+  function processPayment() {
+    const selectedPlan = document.getElementById('selectedPlan').value;
+    
+    if (!selectedPlan) {
+      alert('Please select a plan before proceeding');
+      return;
+    }
+    
+    // Here you would typically:
+    // 1. Get the selected payment method
+    // 2. Send the data to your backend
+    // 3. Process the payment
+    
+    console.log('Processing payment for plan:', selectedPlan);
+    alert(`Processing payment for ${selectedPlan}...`);
+    
+    // In a real app, you would:
+    // window.location.href = `/checkout?plan=${selectedPlan}`;
+  }
+</script>
+
+{% endblock %}

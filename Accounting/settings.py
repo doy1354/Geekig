@@ -336,6 +336,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST  = "smtp.sendgrid.net"
 EMAIL_HOST_USER = "apikey"
 EMAIL_HOST_PASSWORD="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"
+EMAIL_HOST_PASSWORD= GET_EMAIL_HOST_PASSWORD
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = "doyen118.business@gmail.com"
 
@@ -384,7 +385,7 @@ LIFETIME_PRICE_ID = LIFETIME_PRICE
 client_id = get_client_id
 client_secret = get_client_secret
 
-#
+
 get_client_token = client_token
 
 

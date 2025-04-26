@@ -49,8 +49,12 @@ flake8==3.9.0
 fonttools==4.57.0
 frozenlist==1.4.1
 future==0.18.2
+<<<<<<< HEAD
 gunicorn==23.0.0
 h11==0.14.0
+=======
+h11==0.16.0
+>>>>>>> 13d2556427b2e22786b312efc364e5cbe03a9edd
 html5lib==1.1
 httpcore==1.0.2
 httpx==0.26.0
