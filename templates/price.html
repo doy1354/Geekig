@@ -1,0 +1,67 @@
+{% extends 'base/dashboard_base.html' %}
+
+{% block title %}Export{% endblock %}
+
+{% block extra_css %}
+<style>
+    h4{
+        display: inline-block;
+        float: left;
+    }
+    .price{
+        float: right;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mt-5">
+            <div class="card-header bg-white">
+                <h4 class="card-title my-2">Scrape Instagram Followers/Following</h4>
+                <button class="btn btn-sm btn-outline-primary price">✨Get Your Credits</button>
+            </div>
+            <div class="card-body">
+        
+            <div class="mb-3 text-center">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="scrapeType" id="followers" checked>
+                    <label class="form-check-label" for="followers">Followers</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="scrapeType" id="following">
+                    <label class="form-check-label" for="following">Following</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="scrapeType" id="similar">
+                    <label class="form-check-label" for="similar">Similar Profile</label>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Target Instagram Public User</label>
+                <input type="text" class="form-control" placeholder="https://www.instagram.com/username">
+            </div>
+        
+            <div class="mb-3">
+                <label class="form-label">Amount of Followers to scrape</label>
+                <input type="number" class="form-control" value="1">
+            </div>
+        
+        
+            <div class="form-check form-switch toggle-switch">
+                <input class="form-check-input" type="checkbox" id="enrichData">
+                <label class="form-check-label" for="enrichData">Enrich data (email, phone, etc.) <span class="text-muted">(x5 credits)</span></label>
+            </div>
+        
+            <div class="form-check form-switch toggle-switch">
+                <input class="form-check-input" type="checkbox" id="onlyEmailResults">
+                <label class="form-check-label" for="onlyEmailResults">Only include results with email <span class="text-muted">(x40 credits)</span></label>
+            </div>
+        
+            <button class="btn btn-primary mt-4 w-100">Start Scraping</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

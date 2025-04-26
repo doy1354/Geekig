@@ -1,9 +1,10 @@
-from .price import PricePlan, Subscriber, TransactionHistory, MeetingLink
+from .price import (PricePlan, Subscriber, TransactionHistory,
+                    RegionPaymentMethod)
 
 
 __all__ = [
     'PricePlan',
     'Subscriber',
     'TransactionHistory',
-    'MeetingLink'
+    'RegionPaymentMethod',
 ]
