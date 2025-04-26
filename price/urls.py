@@ -8,5 +8,5 @@ app_name = 'price'
 
 urlpatterns = [
     # index url ---------------------------------------------------------------
-    path('card/', views.UserCard.as_view(), name='user_card'),
+    path('choice/plan/', views.ChoicePlan.as_view(), name='choice_plan'),
 ]

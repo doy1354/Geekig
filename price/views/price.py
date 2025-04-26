@@ -1,12 +1,16 @@
-import stripe
-import datetime
-from dateutil.relativedelta import relativedelta
-from django.contrib import messages
-from django.db.models import Q
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.views.generic import View
-from django.views.decorators.csrf import ensure_csrf_cookie
-from Accounting import settings
-from price.models import PricePlan, Subscriber, TransactionHistory
+from price.models import PricePlan
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
+class ChoicePlan(LoginRequiredMixin, View):
+
+    """New user registration and signup view"""
+    model = PricePlan
+    template_name = 'price/choice_plan.html'
+
+    def get(self, request, *args, **kwargs):
+        pass
+
+        return render(request, self.template_name)
